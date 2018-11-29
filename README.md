@@ -1,4 +1,4 @@
-# Almanak-Kiesraad Election Matcher
+# Almanak-Kiesraad Matcher
 
 This repository contains code for tools which can match and validate entries from the goverment's '[Almanak](https://almanak.overheid.nl/)' with election candidate list and election results.
 
@@ -24,11 +24,13 @@ In the Python folder we currently have the following file structure:
     - CreateGraphs.py: Contains a number of functions to create plots
     - ExportDataset.py: Contains a number of helper functions to manipulate the output of the matching script to create a desired data view 
  - validation
-    - MappingValidation.py: 
+    - MappingValidation.py: Helper functions to collect a (random) sample and let the user validate the correctness of matches by presenting it on a textual user interface
     - ValidateBestTwo.py: Includes an algorithm which applies the Simulation Optimization principle on feature weights on a validated dataset to obtain an optimal scoring model
-    - CreateFinalDataSets.py
-    - ScoreWorks.py:  
-    
+    - CreateFinalDataSets.py: Remove validated incorrect matches from the dataset
+    - ScoreWorks.py: Validate if the new weights do not change the order of the validated dataset
+ - visualization
+    - Contains files to visualize the results from the Almanak-Kiesraad Matcher on an interactive map of the Netherlands
+ 
 ## Important links
  - [Almanak homepage](https://almanak.overheid.nl/)
  - [Almanak datasets](https://almanak.overheid.nl/archive/)
@@ -37,6 +39,7 @@ In the Python folder we currently have the following file structure:
 
 ## Install and usage
 
+ - Add the Kiesraad EML datasets to the data directory. Follow the structure: data/EML/GR[year] or data/EML/HER[year] for municipalities and data/EML_PS/PS[year] for provinces. Or configure the path in CONFIG.py.
  - Run main.py for starting the matching algorithms
  - The export directory contains the result files
 
