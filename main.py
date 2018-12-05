@@ -6,6 +6,7 @@ from validation import ValidateBestTwo, ScoreWorks, MappingValidation, CreateFin
 import pprint as pp
 import json
 import os
+import subprocess
 
 class Main:
     def __init__(self):
@@ -26,6 +27,8 @@ class Main:
         self.stagen_check(kamer_name="Tweede Kamer der Staten-Generaal")
         pp.pprint(self.stats(self.import_file('./exports/staten_generaal_best.json'), return_totals=True))
         self.write_to_file(self.stats(self.import_file('./exports/staten_generaal_best.json'), return_totals=False), './exports/error_stats_TK_total.json')
+
+        subprocess.call(['./visualization/create_geo_json.sh'])
 
         # pp.pprint(self.stats(self.import_file('./exports/potentials.json'), return_totals=True))
         # pp.pprint(self.stats_examples(self.import_file('./exports/potentials.json'), 2))
