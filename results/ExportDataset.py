@@ -22,10 +22,10 @@ class ExportDataset:
             mncp_mapping_wscore = {'municipality_name': mncp.get('municipality_name'), 'mapping': []}
             new_mapping.append(mncp_mapping_wscore)
             for lid in mncp.get('mapping'):
-                best_map = lid.get('maps_with')[0] if len(lid.get('maps_with')) > 1 else []
+                best_map = lid.get('maps_with')[0] if len(lid.get('maps_with')) > 0 else []
                 best_map2 = lid.get('maps_with')[1] if len(lid.get('maps_with')) > 1 else []
                 lid['maps_with'] = [best_map, best_map2]
-                if best_map != [] and int(best_map.get('score')) < score:
+                if best_map != [] and best_map.get('score') < score:
                     mncp_mapping_wscore['mapping'].append(lid)
         return new_mapping
 
