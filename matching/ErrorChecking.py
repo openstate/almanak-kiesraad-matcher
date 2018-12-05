@@ -45,7 +45,7 @@ class ErrorChecking:
         for raadslid in municipality.get('raadsleden'):
             rlidNameOriginal = raadslid.xpath('./p:naam/text()', namespaces=namespace)[0]
             # Remove all name prefixes
-            rgx = re.compile("Dhr\. |Mw\. |dhr\. |mw\. |mr\. |dr\. |drs\. |ir\. |ing\. ")
+            rgx = re.compile("Dhr\. |Mw\. |dhr\. |mw\. |mr\. |dr\. |drs\. |ir\. |ing\. ", flags=re.IGNORECASE)
             raadslidName = re.sub(rgx, "", rlidNameOriginal).replace(".", "")
 
             # Convert special characters to normal characters using unidecode module and lower case

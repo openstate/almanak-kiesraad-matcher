@@ -66,7 +66,9 @@ class CreateErrorStats:
                         mns['first_letter_initial'] += 1
                 total_members += 1
             mns['could_not_map'] = len(mncp.get('unmappable'))
+            mns['unsure_matches'] = len(mncp.get('unsure_matches'))
             total_members += len(mncp.get('unmappable'))
+            total_members += len(mncp.get('unsure_matches'))
 
             stats.append(mns)
 
@@ -82,7 +84,8 @@ class CreateErrorStats:
             'first_letter_initial': sum(item['first_letter_initial'] for item in stats),
             'spelling_mistake_initial': sum(item['spelling_mistake_initial'] for item in stats),
             'spelling_mistake_lname': sum(item['spelling_mistake_lname'] for item in stats),
-            'combined_name_mistake': sum(item['combined_name_mistake'] for item in stats)
+            'combined_name_mistake': sum(item['combined_name_mistake'] for item in stats),
+            'unsure_matches': sum(item['combined_name_mistake'] for item in stats)
         }
         return totals if return_totals else stats
 
@@ -103,7 +106,8 @@ class CreateErrorStats:
                 'first_letter_initial': [],
                 'spelling_mistake_initial': [],
                 'spelling_mistake_lname': [],
-                'combined_name_mistake': []
+                'combined_name_mistake': [],
+                'unsure_matches': len(mncp.get('unsure_matches'))
             }
 
             for member in mncp.get('mapping'):

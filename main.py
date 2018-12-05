@@ -1,4 +1,4 @@
-from import_data import ImportAlmanak, ImportCandidates, ImportProvinceAlmanak
+from import_data import ImportAlmanak, ImportCandidates, ImportProvinceAlmanak, ImportStatenGeneraalAlmanak
 from matching import ErrorChecking, CheckSeats, AssignScore
 from results import ExportDataset, CreateErrorStats, CreateGraphs
 from validation import ValidateBestTwo, ScoreWorks, MappingValidation, CreateFinalDataSets
@@ -18,6 +18,14 @@ class Main:
         error_stats = self.stats(self.import_file('./exports/corrected_almanak.json'))
         self.write_to_file(self.merge_seat_error_stats(seat_stats, error_stats), './exports/error_stats_total.json')
         self.province_check()
+
+        self.stagen_check(kamer_name="Eerste Kamer der Staten-Generaal")
+        pp.pprint(self.stats(self.import_file('./exports/staten_generaal_best.json'), return_totals=True))
+        self.write_to_file(self.stats(self.import_file('./exports/staten_generaal_best.json'), return_totals=False), './exports/error_stats_EK_total.json')
+
+        self.stagen_check(kamer_name="Tweede Kamer der Staten-Generaal")
+        pp.pprint(self.stats(self.import_file('./exports/staten_generaal_best.json'), return_totals=True))
+        self.write_to_file(self.stats(self.import_file('./exports/staten_generaal_best.json'), return_totals=False), './exports/error_stats_TK_total.json')
 
         # pp.pprint(self.stats(self.import_file('./exports/potentials.json'), return_totals=True))
         # pp.pprint(self.stats_examples(self.import_file('./exports/potentials.json'), 2))
@@ -144,6 +152,10 @@ class Main:
         IPA = ImportProvinceAlmanak.ImportProvinceAlmanak()
         return IPA.parse_almanak()
 
+    def import_stagen_almanak(self, kamer_name):
+        ISGA = ImportStatenGeneraalAlmanak.ImportStatenGeneraalAlmanak()
+        return ISGA.parse_almanak(kamer_name)
+
     def municipality_check(self):
         self.write_to_file(self.match(), './exports/match.json')
         self.write_to_file(self.score(self.import_file('./exports/match.json')), './exports/score.json')
@@ -169,6 +181,17 @@ class Main:
                            './exports/province_score.json')
         self.write_to_file(self.best(self.import_file('./exports/province_score.json')), './exports/province_best.json')
 
+    def stagen_check(self, kamer_name="Eerste Kamer der Staten-Generaal"):
+        self.write_to_file(self.import_stagen_almanak(kamer_name), './exports/staten_generaal_match.json')
+        self.write_to_file(self.score(self.import_file('./exports/staten_generaal_match.json')),
+                           './exports/staten_generaal_score.json')
+        self.write_to_file(self.potentials(self.import_file('./exports/staten_generaal_score.json')),
+                           './exports/staten_generaal_potentials.json')
+
+        if kamer_name == "Eerste Kamer der Staten-Generaal":
+            self.write_to_file(self.best(self.import_file('./exports/staten_generaal_potentials.json')), './exports/eerste_kamer_best.json')
+        elif kamer_name == "Tweede Kamer der Staten-Generaal":
+            self.write_to_file(self.best(self.import_file('./exports/staten_generaal_potentials.json')), './exports/tweede_kamer_best.json')
 
 if __name__ == '__main__':
     Main()

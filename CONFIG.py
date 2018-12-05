@@ -1,7 +1,6 @@
 class CONFIG:
     # ---- Municipality Config ----
     # File path Almanak
-    # FILEPATH_ALMANAK = './data/almanak/20180903_gemeenten.xml'
     FILEPATH_ALMANAK = 'https://almanak.overheid.nl/archive/exportOO_gemeenten.xml'
 
     # File paths election
@@ -59,21 +58,16 @@ class CONFIG:
     }
     NS_ALMANAK = {"p": "https://almanak.overheid.nl/static/schema/oo/export/2.4.0"}
 
-    # SCORING_WEIGHTS = {"gender": 40,
-    #                    "last_name": 50,
-    #                    "discount_combined_name": 25,
-    #                    "initial": 20,
-    #                    "first_letter": 20,
-    #                    "party": 40,
-    #                    "lv_ln_multiplier": 3,
-    #                    "lv_in_multiplier": 6}
-    # SCORING_WEIGHTS = {"first_letter": 7.864320000000005, "discount_combined_name": 0.04642275147320185, "lv_ln_multiplier": 0.02448074784719628, "lv_in_multiplier": 8.640000000000004, "last_name": 0.04951760157141529, "gender": 0.031691265005705786, "initial": 7.864320000000005, "party": 0.20890238162940827}
     SCORING_WEIGHTS = {"gender": 0.002722258935367514, "last_name": 0.00425352958651174, "discount_combined_name": 0.0039876839873547575, "initial": 7.864320000000005, "first_letter": 7.864320000000005, "party": 0.022430722428870505, "lv_ln_multiplier": 0.0021028802277066098, "lv_in_multiplier": 8.640000000000004}
 
     # ----- Province config -----
-    # FILEPATH_ALMANAK_PROVINCE = './data/almanak/20180903_provincies.xml'
     FILEPATH_ALMANAK_PROVINCE = 'https://almanak.overheid.nl/archive/exportOO_provincies.xml'
     NS_ALMANAK_PROVINCE = {"p": "https://almanak.overheid.nl/static/schema/oo/export/2.4.3"}
     FILE_PATH_EXCLUDED_PROVINCE = './data/EML/PS2015/*/_*.txt'
     FILE_PATH_CANDIDATES_PROVINCE = './data/EML_PS/PS2015/*/?andidatenlijsten_??2015_*.eml.xml'
     FILE_PATH_RESULTS_PROVINCE = './data/EML_PS/PS2015/*/?esultaat_??2015_*.eml.xml'
+
+    FILEPATH_ALMANAK_SG = 'https://almanak.overheid.nl/archive/exportOO_staten-generaal.xml'
+    NS_ALMANAK_STAGEN = {"p": "https://almanak.overheid.nl/static/schema/oo/export/2.4.3"}
+    FILE_PATH_CANDIDATES_EK = './data/EML_EK/EK2015/Kandidatenlijsten_EK2015_ZuidHolland.eml.xml'
+    FILE_PATH_CANDIDATES_TK = './data/EML_TK/TK2017/CSB_uitslag/Kandidatenlijsten_TK2017_Amsterdam.eml.xml'
