@@ -44,21 +44,19 @@ In the Python folder we currently have the following file structure:
 curl -gsSf 'https://data.overheid.nl/data/api/3/action/package_search?q=EML&facet.field=[%22res_format%22,%22maintainer%22]&fq=res_format:%22ZIP%22+maintainer:%22http://standaarden.overheid.nl/owms/terms/Kiesraad%22&rows=100' --compressed | jq '.result.results|map({title,modified:.modified|split("-")|reverse|join("-")} as $b|.resources[]|{url,created:.created[0:10],short:.url|split("/")[-1][:-4]|split("_")[-1][-10:]|ascii_upcase} + $b)|sort_by(.created)'
 # download all EK, TK, PS and GR elections:
 | jq 'map(select(([.short[0:2]]|inside(["EK","TK","PS","GR"])) and (.short[2:6]|tonumber) > 2012))[].url' -r | xargs -I '{url}' curl -gsSfOL '{url}'
-# unzip HER:
-for f in $(ls *GR201?????.zip); do Y="${f:(-12):4}";D="data/EML/HER$Y";mkdir -p "$D";unzip "$f" -d "$D"; done
-# unzip GR:
-for f in $(ls *GR201?.zip); do Y="${f:(-10):6}";D="data/EML/$Y";echo "$D";unzip "$f" -d "$D"; done
-# fix Zundert, that has a BOM (meaning UTF-8) but with latin1 \xE8 inside :(
-sed $'1s/^\uFEFF//' "data/EML/GR2018/11 Noord-Brabant/Kandidatenlijsten_GR2018_Zundert.eml.xml" | iconv -f latin1 -t utf-8 > tmp.xml
-mv tmp.xml "data/EML/GR2018/11 Noord-Brabant/Kandidatenlijsten_GR2018_Zundert.eml.xml"
-# unzip PS:
-for f in $(ls *PS201?.zip); do Y="${f:(-10):6}";D="data/EML_PS/$Y";echo "$D";mkdir -p "$D";unzip "$f" -d "$D"; done
-# fix latin1 \xE2 (â) to unicode
-mv data/EML_PS/PS2015/02\ Frysl$'\342'n data/EML_PS/PS2015/02\ Fryslân
-# unzip EK:
-for f in $(ls *EK201?.zip); do Y="${f:(-10):6}";D="data/EML_EK/$Y";echo "$D";mkdir -p "$D";unzip "$f" -d "$D"; done
-# unzip TK:
-for f in $(ls *TK201?.zip); do Y="${f:(-10):6}";D="data/EML_TK/$Y";echo "$D";mkdir -p "$D";unzip "$f" -d "$D"; done
+# unzip GR and GR_HER:
+for f in $(ls *GR201?.zip); do D="data/EML/${f:(-10):6}";mkdir -p "$D";unzip "$f" '*/[Rr]esultaat*.eml.xml' '*/[Kk]andidatenlijsten*.eml.xml' '*/_*.txt' -d "$D"; done
+for f in $(ls *GR201?????.zip); do D="data/EML/HER${f:(-12):4}";mkdir -p "$D";unzip "$f" '*/[Rr]esultaat*.eml.xml' '*/[Kk]andidatenlijsten*.eml.xml' '*/_*.txt' -d "$D"; done
+# unzip EK, TK and PS:
+for f in $(ls *[ETP][KS]201?.zip); do D="data/EML_${f:(-10):2}/${f:(-10):6}";mkdir -p "$D";unzip "$f" '*[Rr]esultaat*.eml.xml' '*[Kk]andidatenlijsten*.eml.xml' '*_*.txt' -d "$D"; done
+
+# fix Zundert, that has a BOM (meaning UTF-8) but with latin1 \xE8 (è) inside :(
+sed $'1s/^\uFEFF//' 'data/EML/GR2018/11 Noord-Brabant/Kandidatenlijsten_GR2018_Zundert.eml.xml' | iconv -f latin1 -t utf-8 > tmp.xml
+mv tmp.xml 'data/EML/GR2018/11 Noord-Brabant/Kandidatenlijsten_GR2018_Zundert.eml.xml'
+
+# convert latin1 filename \xE2 (â) to UTF-8
+mv $'data/EML_PS/PS2015/02 Frysl\xE2n' $'data/EML_PS/PS2015/02 Frysl\uE2n'
+# or: convmv -f iso-8859-1 -t utf-8 data/EML_PS/PS2015/* --notest
 ```
  - Install the requirements:
 ```bash
