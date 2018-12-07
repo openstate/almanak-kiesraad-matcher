@@ -43,7 +43,7 @@ In the Python folder we currently have the following file structure:
 ```bash
 curl -gsSf 'https://data.overheid.nl/data/api/3/action/package_search?q=EML&facet.field=[%22res_format%22,%22maintainer%22]&fq=res_format:%22ZIP%22+maintainer:%22http://standaarden.overheid.nl/owms/terms/Kiesraad%22&rows=100' --compressed | jq '.result.results|map({title,modified:.modified|split("-")|reverse|join("-")} as $b|.resources[]|{url,created:.created[0:10],short:.url|split("/")[-1][:-4]|split("_")[-1][-10:]|ascii_upcase} + $b)|sort_by(.created)'
 # download all EK, TK, PS and GR elections:
-| jq 'map(select([.short[0:2]]|inside(["EK","TK","PS","GR"])))[].url' -r | xargs -I '{url}' curl -gsSfOL '{url}'
+| jq 'map(select(([.short[0:2]]|inside(["EK","TK","PS","GR"])) and (.short[2:6]|tonumber) > 2012))[].url' -r | xargs -I '{url}' curl -gsSfOL '{url}'
 # unzip HER:
 for f in $(ls *GR201?????.zip); do Y="${f:(-12):4}";D="data/EML/HER$Y";mkdir -p "$D";unzip "$f" -d "$D"; done
 # unzip GR:
@@ -60,7 +60,8 @@ for f in $(ls *EK201?.zip); do Y="${f:(-10):6}";D="data/EML_EK/$Y";echo "$D";mkd
 # unzip TK:
 for f in $(ls *TK201?.zip); do Y="${f:(-10):6}";D="data/EML_TK/$Y";echo "$D";mkdir -p "$D";unzip "$f" -d "$D"; done
 ```
- - Install the requirements: ```bash
+ - Install the requirements:
+```bash
 pip install -r requirements.txt
 ```
  - Run main.py for starting the matching algorithms
