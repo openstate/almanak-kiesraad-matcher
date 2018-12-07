@@ -53,7 +53,7 @@ for f in $(ls *GR201?????.zip); do D="data/EML/HER${f:(-12):4}";mkdir -p "$D";un
 # unzip EK, TK and PS:
 for f in $(ls *[ETP][KS]201?.zip); do D="data/EML_${f:(-10):2}/${f:(-10):6}";mkdir -p "$D";unzip "$f" '*[Rr]esultaat*.eml.xml' '*[Kk]andidatenlijsten*.eml.xml' '*_*.txt' -d "$D"; done
 
-# fix Zundert, that has a BOM (meaning UTF-8) but with latin1 \xE8 (è) inside :(
+# fix Zundert, that has a UTF-8 byte order mark (BOM) (\uFEFF = \xEFBBBF in UTF-8) but with latin1 \xE8 (è) inside :(
 sed $'1s/^\uFEFF//' 'data/EML/GR2018/11 Noord-Brabant/Kandidatenlijsten_GR2018_Zundert.eml.xml' | iconv -f latin1 -t utf-8 > tmp.xml
 mv tmp.xml 'data/EML/GR2018/11 Noord-Brabant/Kandidatenlijsten_GR2018_Zundert.eml.xml'
 
