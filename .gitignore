@@ -1,5 +1,4 @@
 __pycache__
 .idea
-data/EML
-data/EML_PS
+data/EML*
 exports

@@ -21,12 +21,12 @@ class Main:
         self.province_check()
 
         self.stagen_check(kamer_name="Eerste Kamer der Staten-Generaal")
-        pp.pprint(self.stats(self.import_file('./exports/staten_generaal_best.json'), return_totals=True))
-        self.write_to_file(self.stats(self.import_file('./exports/staten_generaal_best.json'), return_totals=False), './exports/error_stats_EK_total.json')
+        self.write_to_file(self.stats(self.import_file('./exports/eerste_kamer_best.json'), return_totals=False), './exports/error_stats_EK_total.json')
+        pp.pprint(self.stats(self.import_file('./exports/eerste_kamer_best.json'), return_totals=True))
 
         self.stagen_check(kamer_name="Tweede Kamer der Staten-Generaal")
-        pp.pprint(self.stats(self.import_file('./exports/staten_generaal_best.json'), return_totals=True))
-        self.write_to_file(self.stats(self.import_file('./exports/staten_generaal_best.json'), return_totals=False), './exports/error_stats_TK_total.json')
+        self.write_to_file(self.stats(self.import_file('./exports/tweede_kamer_best.json'), return_totals=False), './exports/error_stats_TK_total.json')
+        pp.pprint(self.stats(self.import_file('./exports/tweede_kamer_best.json'), return_totals=True))
 
         subprocess.call(['./visualization/create_geo_json.sh'])
 

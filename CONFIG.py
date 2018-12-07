@@ -70,4 +70,4 @@ class CONFIG:
     FILEPATH_ALMANAK_SG = 'https://almanak.overheid.nl/archive/exportOO_staten-generaal.xml'
     NS_ALMANAK_STAGEN = {"p": "https://almanak.overheid.nl/static/schema/oo/export/2.4.3"}
     FILE_PATH_CANDIDATES_EK = './data/EML_EK/EK2015/Kandidatenlijsten_EK2015_ZuidHolland.eml.xml'
-    FILE_PATH_CANDIDATES_TK = './data/EML_TK/TK2017/CSB_uitslag/Kandidatenlijsten_TK2017_Amsterdam.eml.xml'
+    FILE_PATH_CANDIDATES_TK = './data/EML_TK/TK2017/Dataset_TK2017/CSB_uitslag/Kandidatenlijsten_TK2017_Amsterdam.eml.xml'

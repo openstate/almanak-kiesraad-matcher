@@ -58,10 +58,12 @@ class ErrorChecking:
                 gender = 'female'
 
             raadslidParty = raadslid.xpath('./p:partij/text()', namespaces=namespace)
+            systemId = raadslid.xpath('./p:systemId/p:systemId/text()', namespaces=namespace)[0]
             raadslidParty = raadslidParty[0] if len(raadslidParty) > 0 else ""
 
             raadslid_data = {
                 'name_allmanak': raadslidName,
+                'systemId_allmanak': systemId,
                 'name_original': rlidNameOriginal,
                 'gender_allmanak': gender,
                 'party_allmanak': raadslidParty,
