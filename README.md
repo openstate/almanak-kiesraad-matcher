@@ -41,9 +41,12 @@ In the Python folder we currently have the following file structure:
 
  - Add the Kiesraad EML datasets to the data directory. Follow the structure: data/EML/GR[year] or data/EML/HER[year] for municipalities and data/EML_PS/PS[year] for provinces. Or configure the path in CONFIG.py.
 ```bash
-curl -gsSf 'https://data.overheid.nl/data/api/3/action/package_search?q=EML&facet.field=[%22res_format%22,%22maintainer%22]&fq=res_format:%22ZIP%22+maintainer:%22http://standaarden.overheid.nl/owms/terms/Kiesraad%22&rows=100' --compressed | jq '.result.results|map({title,modified:.modified|split("-")|reverse|join("-")} as $b|.resources[]|{url,created:.created[0:10],short:.url|split("/")[-1][:-4]|split("_")[-1][-10:]|ascii_upcase} + $b)|sort_by(.created)'
-# download all EK, TK, PS and GR elections:
-| jq 'map(select(([.short[0:2]]|inside(["EK","TK","PS","GR"])) and (.short[2:6]|tonumber) > 2012))[].url' -r | xargs -I '{url}' curl -gsSfOL '{url}'
+# download all EK, TK, PS and GR elections (curl CKAN REST API to get EML datasets, jq convert to usable JSON array, jq filter set, xargs curl download)
+curl -gsSf 'https://data.overheid.nl/data/api/3/action/package_search?q=EML&facet.field=[%22res_format%22,%22maintainer%22]&fq=res_format:%22ZIP%22+maintainer:%22http://standaarden.overheid.nl/owms/terms/Kiesraad%22&rows=100' --compressed \
+ | jq '.result.results|map({title,modified:.modified|split("-")|reverse|join("-")} as $b|.resources[]|{url,created:.created[0:10],short:.url|split("/")[-1][:-4]|split("_")[-1][-10:]|ascii_upcase} + $b)|sort_by(.created)' \
+ | jq 'map(select(([.short[0:2]]|inside(["EK","TK","PS","GR"])) and (.short[2:6]|tonumber) > 2012))[].url' -r \
+ | xargs -I '{url}' curl -gsSfOL '{url}'
+
 # unzip GR and GR_HER:
 for f in $(ls *GR201?.zip); do D="data/EML/${f:(-10):6}";mkdir -p "$D";unzip "$f" '*/[Rr]esultaat*.eml.xml' '*/[Kk]andidatenlijsten*.eml.xml' '*/_*.txt' -d "$D"; done
 for f in $(ls *GR201?????.zip); do D="data/EML/HER${f:(-12):4}";mkdir -p "$D";unzip "$f" '*/[Rr]esultaat*.eml.xml' '*/[Kk]andidatenlijsten*.eml.xml' '*/_*.txt' -d "$D"; done
