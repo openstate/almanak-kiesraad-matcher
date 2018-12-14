@@ -66,7 +66,7 @@
         let props = layer.feature.properties;
         popup = L.popup({autoPan: false, className: 'OSF-popup'})
             .setLatLng(latlng)
-            .setContent('<div><h2>' + props.municipality_name + '</h2><ul><li>Number elected: ' + props.number_elected + '</li><li>Number registered: ' + props.number_seats + '</li></ul></div>')
+            .setContent('<div><h2>' + props.municipality_name + '</h2><ul><li>Aantal zetels in gemeenteraad: ' + props.number_elected + '</li><li>Aantal geregistreerd in Almanak: ' + props.number_seats + '</li></ul></div>')
             .openOn(map);
     }
 
