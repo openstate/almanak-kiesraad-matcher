@@ -12,10 +12,10 @@ class CONFIG:
     filepathsResultsHER2015 = './data/EML/HER2015/*/?esultaat_??2015_*.eml.xml'
     filepathsResultsHER2016 = './data/EML/HER2016/*/?esultaat_??2016_*.eml.xml'
     filepathsResultsHER2017 = './data/EML/HER2017/*/?esultaat_??2017_*.eml.xml'
-    FILE_PATHS_RESULTS = [filepathsResultsGR2018, filepathsResultsHER2017, filepathsResultsHER2016,
-                          filepathsResultsHER2015,
-                          filepathsResultsHER2014, filepathsResultsGR2014, filepathsResultsHER2013,
-                          filepathsResultsHER2012]
+    filepathsResultsHER2018 = './data/EML/HER2018/*/?esultaat_??2018_*.eml.xml'
+    FILE_PATHS_RESULTS = [filepathsResultsHER2018, filepathsResultsGR2018, filepathsResultsHER2017,
+                          filepathsResultsHER2016, filepathsResultsHER2015, filepathsResultsHER2014,
+                          filepathsResultsGR2014, filepathsResultsHER2013, filepathsResultsHER2012]
 
     filepathsCandidatesGR2018 = './data/EML/GR2018/*/?andidatenlijsten_??2018_*.eml.xml'
     filepathsCandidatesGR2014 = './data/EML/GR2014/*/?andidatenlijsten_??2014_*.eml.xml'
@@ -25,9 +25,10 @@ class CONFIG:
     filepathsCandidatesHER2015 = './data/EML/HER2015/*/?andidatenlijsten_??2015_*.eml.xml'
     filepathsCandidatesHER2016 = './data/EML/HER2016/*/?andidatenlijsten_??2016_*.eml.xml'
     filepathsCandidatesHER2017 = './data/EML/HER2017/*/?andidatenlijsten_??2017_*.eml.xml'
-    FILE_PATHS_CANDIDATES = [filepathsCandidatesGR2018, filepathsCandidatesHER2017, filepathsCandidatesHER2016,
-                             filepathsCandidatesHER2015, filepathsCandidatesHER2014, filepathsCandidatesGR2014,
-                             filepathsCandidatesHER2013, filepathsCandidatesHER2012]
+    filepathsCandidatesHER2018 = './data/EML/HER2018/*/?andidatenlijsten_??2018_*.eml.xml'
+    FILE_PATHS_CANDIDATES = [filepathsCandidatesHER2018, filepathsCandidatesGR2018, filepathsCandidatesHER2017,
+                             filepathsCandidatesHER2016, filepathsCandidatesHER2015, filepathsCandidatesHER2014,
+                             filepathsCandidatesGR2014, filepathsCandidatesHER2013, filepathsCandidatesHER2012]
 
 
     filepathsExcludedGR2018 = './data/EML/GR2018/*/_*.txt'
@@ -38,9 +39,10 @@ class CONFIG:
     filepathsExcludedHER2015 = './data/EML/HER2015/*/_*.txt'
     filepathsExcludedHER2016 = './data/EML/HER2016/*/_*.txt'
     filepathsExcludedHER2017 = './data/EML/HER2017/*/_*.txt'
-    FILE_PATHS_EXCLUDED = [filepathsExcludedGR2018, filepathsExcludedHER2017, filepathsExcludedHER2016,
-                           filepathsExcludedHER2015, filepathsExcludedHER2014, filepathsExcludedGR2014,
-                           filepathsExcludedHER2013, filepathsExcludedHER2012]
+    filepathsExcludedHER2018 = './data/EML/HER2018/*/_*.txt'
+    FILE_PATHS_EXCLUDED = [filepathsExcludedHER2018, filepathsExcludedGR2018, filepathsExcludedHER2017,
+                           filepathsExcludedHER2016, filepathsExcludedHER2015, filepathsExcludedHER2014,
+                           filepathsExcludedGR2014, filepathsExcludedHER2013, filepathsExcludedHER2012]
 
     # Namespaces
     NS_CANDIDATES_LIST = {
@@ -56,18 +58,18 @@ class CONFIG:
         "kr": "http://www.kiesraad.nl/extensions", "rg": "http://www.kiesraad.nl/reportgenerator",
         "xal": "urn:oasis:names:tc:ciq:xsdschema:xAL:2.0", "xnl": "urn:oasis:names:tc:ciq:xsdschema:xNL:2.0"
     }
-    NS_ALMANAK = {"p": "https://almanak.overheid.nl/static/schema/oo/export/2.4.0"}
+    NS_ALMANAK = {"p": "https://almanak.overheid.nl/static/schema/oo/export/2.4.1"}
 
     SCORING_WEIGHTS = {"gender": 0.002722258935367514, "last_name": 0.00425352958651174, "discount_combined_name": 0.0039876839873547575, "initial": 7.864320000000005, "first_letter": 7.864320000000005, "party": 0.022430722428870505, "lv_ln_multiplier": 0.0021028802277066098, "lv_in_multiplier": 8.640000000000004}
 
     # ----- Province config -----
     FILEPATH_ALMANAK_PROVINCE = 'https://almanak.overheid.nl/archive/exportOO_provincies.xml'
-    NS_ALMANAK_PROVINCE = {"p": "https://almanak.overheid.nl/static/schema/oo/export/2.4.3"}
+    NS_ALMANAK_PROVINCE = {"p": "https://almanak.overheid.nl/static/schema/oo/export/2.4.5"}
     FILE_PATH_EXCLUDED_PROVINCE = './data/EML/PS2015/*/_*.txt'
     FILE_PATH_CANDIDATES_PROVINCE = './data/EML_PS/PS2015/*/?andidatenlijsten_??2015_*.eml.xml'
     FILE_PATH_RESULTS_PROVINCE = './data/EML_PS/PS2015/*/?esultaat_??2015_*.eml.xml'
 
     FILEPATH_ALMANAK_SG = 'https://almanak.overheid.nl/archive/exportOO_staten-generaal.xml'
-    NS_ALMANAK_STAGEN = {"p": "https://almanak.overheid.nl/static/schema/oo/export/2.4.3"}
+    NS_ALMANAK_STAGEN = {"p": "https://almanak.overheid.nl/static/schema/oo/export/2.4.5"}
     FILE_PATH_CANDIDATES_EK = './data/EML_EK/EK2015/Kandidatenlijsten_EK2015_ZuidHolland.eml.xml'
     FILE_PATH_CANDIDATES_TK = './data/EML_TK/TK2017/Dataset_TK2017/CSB_uitslag/Kandidatenlijsten_TK2017_Amsterdam.eml.xml'

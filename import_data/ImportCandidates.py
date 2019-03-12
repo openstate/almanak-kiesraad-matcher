@@ -35,6 +35,9 @@ class ImportCandidates:
                     cndt_gender = cndt_elem.xpath('./def:Gender/text()', namespaces=CONFIG.NS_CANDIDATES_LIST)
                     cndt_gender = cndt_gender[0] if len(cndt_gender) > 0 else "undefined"
 
+                    cndt_city = cndt_elem.xpath('./def:QualifyingAddress/ns2:Locality/ns2:LocalityName/text()', namespaces=CONFIG.NS_CANDIDATES_LIST)
+                    cndt_city = cndt_city[0] if len(cndt_city) > 0 else ""
+
                     # Convert special characters to normal characters using unidecode module and lower case
                     cndt_array.append({
                         'initials': unidecode.unidecode(cndt_initials.replace(".", "")).lower(),
@@ -48,6 +51,7 @@ class ImportCandidates:
                             'firstName': cndt_first_name,
                             'prefix': cndt_name_prefix,
                             'lastName': cndt_last_name
-                        }
+                        },
+                        'city': cndt_city
                     })
         return cndt_array

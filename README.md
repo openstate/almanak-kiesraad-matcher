@@ -57,8 +57,9 @@ for f in $(ls *[ETP][KS]201?.zip); do D="data/EML_${f:(-10):2}/${f:(-10):6}";mkd
 sed $'1s/^\uFEFF//' 'data/EML/GR2018/11 Noord-Brabant/Kandidatenlijsten_GR2018_Zundert.eml.xml' | iconv -f latin1 -t utf-8 > tmp.xml
 mv tmp.xml 'data/EML/GR2018/11 Noord-Brabant/Kandidatenlijsten_GR2018_Zundert.eml.xml'
 
-# convert latin1 filename \xE2 (â) to UTF-8
+# convert latin1 filename \xE2 (â) to UTF-8 in Fryslân
 mv $'data/EML_PS/PS2015/02 Frysl\xE2n' $'data/EML_PS/PS2015/02 Frysl\uE2n'
+mv $'data/EML/HER2018/Noardeast-Frysl\xE2n' $'data/EML/HER2018/Noardeast-Frysl\uE2n'
 # or: convmv -f iso-8859-1 -t utf-8 data/EML_PS/PS2015/* --notest
 ```
  - Install the requirements:
