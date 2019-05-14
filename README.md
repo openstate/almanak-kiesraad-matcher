@@ -40,11 +40,13 @@ In the Python folder we currently have the following file structure:
 ## Install and usage
 
  - Add the Kiesraad EML datasets to the data directory. Follow the structure: data/EML/GR[year] or data/EML/HER[year] for municipalities and data/EML_PS/PS[year] for provinces. Or configure the path in CONFIG.py.
+<!-- API change/break? can no longer use res_format & maintainer as facets?
+    curl -gsSf 'https://data.overheid.nl/data/api/3/action/package_search?q=EML&facet.field=[%22res_format%22,%22maintainer%22]&fq=res_format:%22ZIP%22+maintainer:%22http://standaarden.overheid.nl/owms/terms/Kiesraad%22&rows=100' --compressed \ -->
 ```bash
 # download all EK, TK, PS and GR elections (curl CKAN REST API to get EML datasets, jq convert to usable JSON array, jq filter set, xargs curl download)
-curl -gsSf 'https://data.overheid.nl/data/api/3/action/package_search?q=EML&facet.field=[%22res_format%22,%22maintainer%22]&fq=res_format:%22ZIP%22+maintainer:%22http://standaarden.overheid.nl/owms/terms/Kiesraad%22&rows=100' --compressed \
- | jq '.result.results|map({title,modified:.modified|split("-")|reverse|join("-")} as $b|.resources[]|{url,created:.created[0:10],short:.url|split("/")[-1][:-4]|split("_")[-1][-10:]|ascii_upcase} + $b)|sort_by(.created)' \
- | jq 'map(select(([.short[0:2]]|inside(["EK","TK","PS","GR"])) and (.short[2:6]|tonumber) > 2012))[].url' -r \
+curl -gsSf 'https://data.overheid.nl/data/api/3/action/package_search?q=EML+Kiesraad+ZIP&rows=100' --compressed \
+ | jq '.result.results|map({title,modified} as $b|.resources[]|{url,created:.created[0:10],short:.url|split("/")[-1][:-4]|split("_")[-1][-10:]|ascii_upcase} + $b)|sort_by(.created)' \
+ | jq 'map(select(.short == "NDENPS2019" or ([.short[0:2]]|inside(["EK","TK","PS","GR"])) and (.short[2:6]|tonumber) > 2012))[].url' -r \
  | xargs -I '{url}' curl -gsSfOL '{url}'
 
 # unzip GR and GR_HER:
@@ -59,6 +61,7 @@ mv tmp.xml 'data/EML/GR2018/11 Noord-Brabant/Kandidatenlijsten_GR2018_Zundert.em
 
 # convert latin1 filename \xE2 (â) to UTF-8 in Fryslân
 mv $'data/EML_PS/PS2015/02 Frysl\xE2n' $'data/EML_PS/PS2015/02 Frysl\uE2n'
+mv $'data/EML_PS/PS2019/02 Frysl\xE2n' $'data/EML_PS/PS2019/02 Frysl\uE2n'
 mv $'data/EML/HER2018/Noardeast-Frysl\xE2n' $'data/EML/HER2018/Noardeast-Frysl\uE2n'
 # or: convmv -f iso-8859-1 -t utf-8 data/EML_PS/PS2015/* --notest
 ```

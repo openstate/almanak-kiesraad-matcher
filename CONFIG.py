@@ -64,12 +64,12 @@ class CONFIG:
 
     # ----- Province config -----
     FILEPATH_ALMANAK_PROVINCE = 'https://almanak.overheid.nl/archive/exportOO_provincies.xml'
-    NS_ALMANAK_PROVINCE = {"p": "https://almanak.overheid.nl/static/schema/oo/export/2.4.5"}
-    FILE_PATH_EXCLUDED_PROVINCE = './data/EML/PS2015/*/_*.txt'
-    FILE_PATH_CANDIDATES_PROVINCE = './data/EML_PS/PS2015/*/?andidatenlijsten_??2015_*.eml.xml'
-    FILE_PATH_RESULTS_PROVINCE = './data/EML_PS/PS2015/*/?esultaat_??2015_*.eml.xml'
+    NS_ALMANAK_PROVINCE = {"p": "https://almanak.overheid.nl/static/schema/oo/export/2.4.6"}
+    FILE_PATH_EXCLUDED_PROVINCE = './data/EML/PS2019/*/_*.txt'
+    FILE_PATH_CANDIDATES_PROVINCE = './data/EML_PS/PS2019/*/?andidatenlijsten_??2019_*.eml.xml'
+    FILE_PATH_RESULTS_PROVINCE = './data/EML_PS/PS2019/*/?esultaat_??2019_*.eml.xml'
 
     FILEPATH_ALMANAK_SG = 'https://almanak.overheid.nl/archive/exportOO_staten-generaal.xml'
-    NS_ALMANAK_STAGEN = {"p": "https://almanak.overheid.nl/static/schema/oo/export/2.4.5"}
+    NS_ALMANAK_STAGEN = {"p": "https://almanak.overheid.nl/static/schema/oo/export/2.4.6"}
     FILE_PATH_CANDIDATES_EK = './data/EML_EK/EK2015/Kandidatenlijsten_EK2015_ZuidHolland.eml.xml'
     FILE_PATH_CANDIDATES_TK = './data/EML_TK/TK2017/Dataset_TK2017/CSB_uitslag/Kandidatenlijsten_TK2017_Amsterdam.eml.xml'

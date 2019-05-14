@@ -128,7 +128,9 @@ class ErrorChecking:
                 },
                 "party": candidate.get("party"),
                 "gender": candidate.get("gender"),
-                "city": candidate.get("city")
+                "city": candidate.get("city"),
+                "election": candidate.get("election"),
+                "id": candidate.get("id"),
             }
             candidate_name = candidate.get('initials') + " " + candidate.get('prefix') + candidate.get('lastName')
 
