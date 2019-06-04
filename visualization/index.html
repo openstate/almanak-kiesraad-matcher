@@ -184,7 +184,6 @@
                 '<div>' + (prmts.secretaris_GS ? '&#10003;' : '&#10060') + ' Secretaris Gedeputeerde Staten</div>' +
                 '<div>' + (prmts.provinciale_organisatie ? '&#10003;' : '&#10060') + ' Provinciale Organisatie</div>' +
                 '<div>' + (prmts.statencommissies ? '&#10003;' : '&#10060') + ' Staten Commissies</div>' +
-                '<div>' + (prmts.contact_email ? '&#10003;' : '&#10060') + ' Contact Email</div>' +
                 '</div>')
             .openOn(map);
     }
@@ -366,8 +365,7 @@
     });
 
     function get_score_province(props) {
-        let score = 0;
-        if (props.contact_email) score += 1;
+        let score = 1;
         if (props.commissaris_koning) score += 3;
         if (props.leden_PS) score += 3;
         if (props.voorzitter_PS) score += 1;

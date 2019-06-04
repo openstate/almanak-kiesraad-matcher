@@ -44,10 +44,10 @@ In the Python folder we currently have the following file structure:
     curl -gsSf 'https://data.overheid.nl/data/api/3/action/package_search?q=EML&facet.field=[%22res_format%22,%22maintainer%22]&fq=res_format:%22ZIP%22+maintainer:%22http://standaarden.overheid.nl/owms/terms/Kiesraad%22&rows=100' --compressed \ -->
 ```bash
 # download all EK, TK, PS and GR elections (curl CKAN REST API to get EML datasets, jq convert to usable JSON array, jq filter set, xargs curl download)
-curl -gsSf 'https://data.overheid.nl/data/api/3/action/package_search?q=EML+Kiesraad+ZIP&rows=100' --compressed \
- | jq '.result.results|map({title,modified} as $b|.resources[]|{url,created:.created[0:10],short:.url|split("/")[-1][:-4]|split("_")[-1][-10:]|ascii_upcase} + $b)|sort_by(.created)' \
- | jq 'map(select(.short == "NDENPS2019" or ([.short[0:2]]|inside(["EK","TK","PS","GR"])) and (.short[2:6]|tonumber) > 2012))[].url' -r \
- | xargs -I '{url}' curl -gsSfOL '{url}'
+curl --compressed -sSfgA 'Mozilla/5.0 (compatible; AlmanakKiesraadMatcher/1.0; +https://github.com/openstate/almanak-kiesraad-matcher)' 'https://data.overheid.nl/data/api/3/action/package_search?q=EML+Kiesraad+ZIP&rows=100' \
+ | jq '.result.results|map({title,modified} as $b|.resources[]|{url,created:.created[0:10],short:.url|split("/")[-1][:-4]|split("_")[-1]|ascii_upcase|(if startswith("EMLBESTANDEN") then .[12:] else . end)} + $b)|sort_by(.created)' \
+ | jq 'map(select(([.short[0:2]]|inside(["EK","TK","PS","GR","AB","WS"])) and (.short[2:6]|tonumber) > 2012))[]|[.short,.url]|@tsv' -r \
+ | xargs -L 1 sh -c 'curl --compressed -sSfgLA "Mozilla/5.0 (compatible; AlmanakKiesraadMatcher/1.0; +https://github.com/openstate/almanak-kiesraad-matcher)" -o "$0.zip" "$1"'
 
 # unzip GR and GR_HER:
 for f in $(ls *GR201?.zip); do D="data/EML/${f:(-10):6}";mkdir -p "$D";unzip "$f" '*/[Rr]esultaat*.eml.xml' '*/[Kk]andidatenlijsten*.eml.xml' '*/_*.txt' -d "$D"; done
