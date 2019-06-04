@@ -15,8 +15,11 @@
 <link rel="stylesheet" href="https://labs.easyblog.it/maps/leaflet-search/dist/leaflet-search.min.css"/>
 
 <style>
-    #mapid {
-        height: 1px;
+    body {
+        margin: 0;
+    }
+    html, body, #mapid {
+        height: 100%;
     }
 
     .legend i {
@@ -30,7 +33,6 @@
 <div id="mapid"></div>
 <script>
     let mapdiv = document.getElementById('mapid');
-    mapdiv.style.height = window.innerHeight - 16 + 'px';
 
     let map = L.map('mapid', {minZoom: 8}).setView([52.2, 5.2], 8);
     map.attributionControl.setPrefix(false);
